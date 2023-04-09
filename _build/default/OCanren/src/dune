@@ -1,0 +1,54 @@
+(env
+ (dev
+  (flags
+   (:standard -w -27))))
+
+(include_subdirs unqualified)
+
+(library
+ (name OCanren)
+ (public_name OCanren)
+ (modules
+  Logic
+  Core
+  Stream
+  Subst
+  Term
+  Env
+  Runconf
+  Disequality
+  Option
+  Bool
+  Nat
+  Pair
+  Triple
+  List
+  Timer
+  Peep
+  OCanren)
+ (libraries GT)
+ (flags
+  (:standard -rectypes -short-paths -w -49))
+ (preprocess
+  (per_module
+   ((pps GT.ppx_all)
+    Triple)
+   ((action
+     (run
+      %{project_root}/camlp5/pp5+gt+plugins+dump.exe
+      %{read-lines:../config/instrumentalization.cfg}
+      %{input-file}))
+    Core
+    Stream
+    Option
+    Bool
+    Nat
+    Pair
+    List
+    Logic
+    Peep
+    OCanren))))
+
+(documentation
+ (package OCanren)
+ (mld_files index))
